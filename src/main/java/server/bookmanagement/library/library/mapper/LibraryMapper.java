@@ -1,9 +1,9 @@
-package server.bookmanagement.library.mapper;
+package server.bookmanagement.library.library.mapper;
 
 import org.mapstruct.Mapper;
 import org.mapstruct.ReportingPolicy;
-import server.bookmanagement.library.dto.LibraryDto;
-import server.bookmanagement.library.entity.Library;
+import server.bookmanagement.library.library.dto.LibraryDto;
+import server.bookmanagement.library.library.entity.Library;
 
 @Mapper(componentModel = "spring",unmappedTargetPolicy = ReportingPolicy.IGNORE)
 public interface LibraryMapper {
