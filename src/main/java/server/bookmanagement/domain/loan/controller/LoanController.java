@@ -33,17 +33,19 @@ public class LoanController {
         //Todo: 사용자가 대여가능한 상태인지 확인
         // 대여 조건1 : 대여 중인책이 5권 이하
         // 대여 조건2 : 연체되어서 패널티 안받고 있는지
-        memberService.validLoanQuantity(member);
-        memberService.validLoanOverDue(member);
+        memberService.validLoanStatus(member);
 
         LibraryInventory libraryInventory = libraryInventoryService.findById(post.getLibraryInventoryId());
         //Todo: 도서관에 등록된 책이 대여가능 상태인지 확인 코드 필요 (재고수량 확인)
+        libraryInventoryService.validLoanStatus(libraryInventory);
+
         Loan loan = loanMapper.LoanPostToLoan(post);
         loan.setLoanedAt(LocalDateTime.now()); //대여한시간
         loan.setMember(member);
         loan.setLibraryInventory(libraryInventory);
-        //Todo: 대여후 도서관에 등록된 책 재고수량 수정
-        libraryInventoryService.setLoanQuantity(libraryInventory);
+        //Todo: 대여후 도서관에 등록된 책 재고수량 수정 + 상태값 변경
+        libraryInventoryService.addLoanQuantity(libraryInventory);
+
         Loan loanBook = loanService.loanBook(loan);
         LoanDto.Response response = loanMapper.LoanToLoanResponse(loanBook);
         //Todo: 이 요청에서 예외,오류 발생시 롤백 필요

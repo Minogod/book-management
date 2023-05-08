@@ -26,12 +26,17 @@ public class MemberService {
         return optionalMember.orElseThrow(()->new BusinessLogicException(ExceptionCode.MEMBER_NOT_FOUND));
     }
 
+    public void validLoanStatus(Member member) {
+        validLoanOverDue(member);
+        validLoanQuantity(member);
+    }
+
     public void validLoanQuantity(Member member) {
         //Todo: 사용자가 대여가능한 상태인지 확인
         // 대여 조건1 : 대여 중인책이 5권 이하
         // 대여 조건2 : 연체되어서 패널티 안받고 있는지 ( 이거는 LoanService 에서 구현 )
         if(isOverQuantity(member)) {
-            throw new BusinessLogicException(ExceptionCode.LOAN_NOT_ALLOW);
+            throw new BusinessLogicException(ExceptionCode.EXCEEDS_MAXIMUM_QUANTITY);
         }
     }
 

@@ -29,6 +29,6 @@ public class LibraryInventory extends BaseEntity {
     private Library library;
 
     public enum LoanStatus{
-        대여가능, 모두대여중, 대여불가능책
+        대여가능, 모두대여중
     }
 }

@@ -19,11 +19,26 @@ public class LibraryInventoryService {
         return libraryInventoryRepository.save(libraryInventory);
     }
 
-    public void setLoanQuantity(LibraryInventory libraryInventory){
+    public void addLoanQuantity(LibraryInventory libraryInventory){
         libraryInventory.setLoanQuantity(libraryInventory.getLoanQuantity() + 1);
+        setLoanStatus(libraryInventory);
     }
+
+    private static void setLoanStatus(LibraryInventory libraryInventory) {
+        if(libraryInventory.getLoanQuantity() == libraryInventory.getTotalQuantity()) {
+            libraryInventory.setLoanStatus(LibraryInventory.LoanStatus.모두대여중);
+        }
+    }
+
     public LibraryInventory findById(long id){
         Optional<LibraryInventory> optionalLibraryInventory = libraryInventoryRepository.findById(id);
         return optionalLibraryInventory.orElseThrow(()->new BusinessLogicException(ExceptionCode.LIBRARY_INVENTORY_NOT_FOUND));
+    }
+
+    public void validLoanStatus(LibraryInventory libraryInventory){
+        LibraryInventory.LoanStatus loanStatus = libraryInventory.getLoanStatus();
+        if(loanStatus.equals(LibraryInventory.LoanStatus.모두대여중)) {
+            throw new BusinessLogicException(ExceptionCode.LOAN_NOT_ALLOW);
+        }
     }
 }
