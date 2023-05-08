@@ -43,7 +43,7 @@ public class LoanController {
         loan.setLoanedAt(LocalDateTime.now()); //대여한시간
         loan.setMember(member);
         loan.setLibraryInventory(libraryInventory);
-        //Todo: 대여후 도서관에 등록된 책 재고수량 수정 + 상태값 변경
+        //Todo: 대여후 도서관에 등록된 책 재고수량 수정
         libraryInventoryService.addLoanQuantity(libraryInventory);
 
         Loan loanBook = loanService.loanBook(loan);
