@@ -22,7 +22,7 @@ public class LoanDto {
         private MemberDto.Response member;
         private LibraryInventoryDto.Response libraryInventory;
         private LocalDateTime loanedAt;
-        private LocalDateTime returnAt;
+        private LocalDateTime returnedAt;
         private Loan.LoanStats loanStats;
     }
 }

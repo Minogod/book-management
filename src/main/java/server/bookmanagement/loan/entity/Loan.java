@@ -5,18 +5,19 @@ import lombok.Getter;
 import lombok.Setter;
 import server.bookmanagement.library.inventory.entity.LibraryInventory;
 import server.bookmanagement.member.entity.Member;
-import server.bookmanagement.util.BaseEntity;
 
-import javax.persistence.Entity;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
+import javax.persistence.*;
 import java.time.LocalDateTime;
 
 @Entity(name = "loan_history")
 @Getter @Setter
-public class Loan extends BaseEntity {
+public class Loan {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
     private LocalDateTime loanedAt;
-    private LocalDateTime returnAt;
+    private LocalDateTime returnedAt;
+    @Enumerated(value = EnumType.STRING)
     private LoanStats loanStats = LoanStats.대여중;
     @ManyToOne
     @JoinColumn(name = "member_id")
