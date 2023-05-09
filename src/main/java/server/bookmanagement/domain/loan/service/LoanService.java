@@ -64,7 +64,7 @@ public class LoanService {
 
         LocalDateTime returnedAt = loan.getReturnedAt();
         LocalDateTime loanedAt = loan.getLoanedAt();
-        long daysBetween = ChronoUnit.DAYS.between(returnedAt, loanedAt);
+        long daysBetween = ChronoUnit.DAYS.between(loanedAt, returnedAt);
 
         return daysBetween > maxLoanDay;
     }
@@ -73,7 +73,7 @@ public class LoanService {
         Member member = loan.getMember();
         LocalDateTime returnedAt = loan.getReturnedAt();
         LocalDateTime loanedAt = loan.getLoanedAt();
-        long daysBetween = ChronoUnit.DAYS.between(returnedAt, loanedAt);
+        long daysBetween = ChronoUnit.DAYS.between(loanedAt, returnedAt);
         member.setOverDue(true);
         member.setPenaltyDeadLine(LocalDateTime.now().plusDays(daysBetween - maxLoanDay));
     }
