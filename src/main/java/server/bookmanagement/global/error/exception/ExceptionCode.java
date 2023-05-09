@@ -10,7 +10,9 @@ public enum ExceptionCode {
     LOAN_NOT_FOUND(404,"해당 ID의 대여를 찾을 수 없습니다"),
     EXCEEDS_MAXIMUM_QUANTITY(403,"책을 빌릴 권한이 없습니다. (최대 5권까지 대여가능)"),
     MEMBER_HAS_PENALTY(403,"해당 회원은 연체로 인해 대여 불가능 합니다."),
-    LOAN_NOT_ALLOW(403,"도서관에 해당 책이 모두 대여중입니다.")
+    LOAN_NOT_ALLOW(403,"도서관에 해당 책이 모두 대여중입니다."),
+    MEMBER_NOT_MATCH(403,"이 책을 대여하지 않은 회원 입니다."),
+    ALREADY_RETURNED_BOOKS(403,"이미 반납 처리된 책 입니다.")
     ;
 
     @Getter

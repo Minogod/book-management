@@ -15,22 +15,31 @@ public class LibraryInventoryService {
     private final LibraryInventoryRepository libraryInventoryRepository;
 
 
-    public LibraryInventory registrationInLibrary(LibraryInventory libraryInventory){
+    public LibraryInventory registrationInLibrary(LibraryInventory libraryInventory) {
         return libraryInventoryRepository.save(libraryInventory);
     }
 
-    public void addLoanQuantity(LibraryInventory libraryInventory){
+    public void addLoanQuantity(LibraryInventory libraryInventory) {
         libraryInventory.setLoanQuantity(libraryInventory.getLoanQuantity() + 1);
         setLoanStatus(libraryInventory);
     }
 
+    public void minusLoanQuantity(LibraryInventory libraryInventory) {
+        libraryInventory.setLoanQuantity(libraryInventory.getLoanQuantity() - 1);
+        setLoanStatus(libraryInventory);
+    }
+
+
     private static void setLoanStatus(LibraryInventory libraryInventory) {
         if(libraryInventory.getLoanQuantity() == libraryInventory.getTotalQuantity()) {
             libraryInventory.setLoanStatus(LibraryInventory.LoanStatus.모두대여중);
+        } else if (libraryInventory.getLoanQuantity() < libraryInventory.getTotalQuantity()) {
+            libraryInventory.setLoanStatus(LibraryInventory.LoanStatus.대여가능);
         }
     }
 
-    public LibraryInventory findById(long id){
+
+    public LibraryInventory findById(long id) {
         Optional<LibraryInventory> optionalLibraryInventory = libraryInventoryRepository.findById(id);
         return optionalLibraryInventory.orElseThrow(()->new BusinessLogicException(ExceptionCode.LIBRARY_INVENTORY_NOT_FOUND));
     }
