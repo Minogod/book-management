@@ -12,7 +12,8 @@ public enum ExceptionCode {
     MEMBER_HAS_PENALTY(403,"해당 회원은 연체로 인해 대여 불가능 합니다."),
     LOAN_NOT_ALLOW(403,"도서관에 해당 책이 모두 대여중입니다."),
     MEMBER_NOT_MATCH(403,"이 책을 대여하지 않은 회원 입니다."),
-    ALREADY_RETURNED_BOOKS(403,"이미 반납 처리된 책 입니다.")
+    ALREADY_RETURNED_BOOKS(403,"이미 반납 처리된 책 입니다."),
+    LOAN_QUANTITY_LIMIT(403,"동일한 책은 2권 이상 대여 불가능 합니다.")
     ;
 
     @Getter

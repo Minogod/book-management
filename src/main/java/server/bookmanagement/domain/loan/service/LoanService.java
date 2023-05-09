@@ -1,6 +1,7 @@
 package server.bookmanagement.domain.loan.service;
 
 import lombok.RequiredArgsConstructor;
+import net.bytebuddy.implementation.bytecode.Duplication;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import server.bookmanagement.domain.loan.entity.Loan;
@@ -11,6 +12,7 @@ import server.bookmanagement.global.error.exception.ExceptionCode;
 
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -36,6 +38,22 @@ public class LoanService {
     public void validReturn(Loan loan) {
         if(loan.getLoanStats().equals(Loan.LoanStats.반납완료)) {
             throw new BusinessLogicException(ExceptionCode.ALREADY_RETURNED_BOOKS);
+        }
+    }
+
+    public void validDuplicationLoan(Loan loan) {
+        Member member = loan.getMember();
+        List<Loan> loanBooks = member.getLoanBooks();
+        int count = 0;
+        for(Loan loanedBook : loanBooks) {
+            if(loanedBook.getLibraryInventory().getId().equals(loan.getLibraryInventory().getId())) {
+                if(loanedBook.getLoanStats().equals(Loan.LoanStats.대여중)) {
+                    count++;
+                }
+                if(count > 1) {
+                    throw new BusinessLogicException(ExceptionCode.LOAN_QUANTITY_LIMIT);
+                }
+            }
         }
     }
 
