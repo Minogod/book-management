@@ -23,10 +23,4 @@ public abstract class BaseEntity {
     @LastModifiedDate
     private LocalDateTime updatedAt;
     private LocalDateTime deletedAt;
-    //논리적삭제
-
-    @PreUpdate
-    public void setDeletedAt() {
-        this.deletedAt = LocalDateTime.now();
-    }
 }
