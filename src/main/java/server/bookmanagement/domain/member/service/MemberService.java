@@ -57,6 +57,23 @@ public class MemberService {
         }
         return loanNum >= maxLoanQuantity;
     }
+    public void validMemberStatus(Member member) {
+        if(member.getStatus().equals(Member.Status.DELETED)) {
+            throw new BusinessLogicException(ExceptionCode.MEMBER_DELETED);
+        }
+    }
+
+    public Member deleteMember(Member member) {
+        member.setStatus(Member.Status.DELETED);
+        return memberRepository.save(member);
+        // 논리적삭제
+        // 예시 : 탈퇴후 30일간은 사용자 정보 완전삭제 X
+        // 게시글도 나중에 혹시 완전 삭제 X
+
+        // S3에 이미지 업로드 할때 게시글 삭제되면 이미지 같이 삭제시킬라고 노력했는데
+        // 사실 운영하면 어디 클라우드 용량 이런거 신경 크게 안쓴데
+        // 그냥 최대한 함부러 물리적삭제 하는거 조심한데
+    }
 
 
 }

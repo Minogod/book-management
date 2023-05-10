@@ -15,7 +15,6 @@ import java.util.List;
 @Setter
 public class Library extends BaseEntity {
     private String name;
-    private String img_url;
     @OneToMany(mappedBy = "library", cascade = CascadeType.REMOVE)
     @JsonManagedReference
     private List<LibraryInventory> libraryInventories;

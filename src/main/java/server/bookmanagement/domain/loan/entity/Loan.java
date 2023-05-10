@@ -25,7 +25,7 @@ public class Loan {
     private Member member;
     @ManyToOne
     @JsonBackReference
-    @JoinColumn(name = "book_id")
+    @JoinColumn(name = "library_inventory_id")
     private LibraryInventory libraryInventory;
 
     public enum LoanStats {
