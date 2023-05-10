@@ -13,4 +13,5 @@ public class Book extends BaseEntity {
     private String name;
     private String writer;
     private String publisher;
+    private boolean isDeleted = false;
 }
