@@ -21,6 +21,8 @@ public class LoanService {
     private final LoanRepository loanRepository;
     @Value("${max_loan_day}")
     private long maxLoanDay;
+    @Value("${loan_limited}")
+    private long loan_limited;
 
     public Loan loanBook(Loan loan) {
         return loanRepository.save(loan);
@@ -50,7 +52,7 @@ public class LoanService {
                 if(loanedBook.getLoanStats().equals(Loan.LoanStats.대여중)) {
                     count++;
                 }
-                if(count > 1) {
+                if(count >= loan_limited) {
                     throw new BusinessLogicException(ExceptionCode.LOAN_QUANTITY_LIMIT);
                 }
             }

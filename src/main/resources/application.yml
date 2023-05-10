@@ -14,5 +14,6 @@ spring:
       hibernate:
         format_sql: true
 #        default_batch_fetch_size: 1000
+loan_limited: 2
 max_loan_day: 14
 max_loan_quantity: 5
