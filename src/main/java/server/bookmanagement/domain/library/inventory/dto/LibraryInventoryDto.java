@@ -16,6 +16,16 @@ public class LibraryInventoryDto {
         private long libraryId;
         private int totalQuantity;
     }
+    @Getter
+    @Setter
+    @NoArgsConstructor
+    public static class BookResponse {
+        private long id;
+        private LibraryDto.Response library;
+        private int totalQuantity;
+        private int loanQuantity;
+        private LibraryInventory.LoanStatus loanStatus;
+    }
 
     @Getter
     @Setter

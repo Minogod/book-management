@@ -2,6 +2,7 @@ package server.bookmanagement.domain.library.library.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 import server.bookmanagement.domain.library.inventory.dto.LibraryInventoryDto;
 
@@ -9,7 +10,8 @@ import java.util.List;
 
 public class LibraryDto {
     @Getter
-    @AllArgsConstructor
+    @Setter
+    @NoArgsConstructor
     public static class Post {
         private String name;
     }

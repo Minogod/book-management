@@ -10,7 +10,7 @@ import java.util.List;
 @Mapper(componentModel = "spring",unmappedTargetPolicy = ReportingPolicy.IGNORE)
 public interface LibraryInventoryMapper {
     LibraryInventory LibraryInventoryPostToLibraryInventory(LibraryInventoryDto.Post post);
-    LibraryInventoryDto.LibraryResponse LibraryInventoryToLibraryResponse(LibraryInventory libraryInventory);
+//    LibraryInventoryDto.LibraryResponse LibraryInventoryToLibraryResponse(LibraryInventory libraryInventory);
     LibraryInventoryDto.Response LibraryInventoryToResponse(LibraryInventory libraryInventory);
-    List<LibraryInventoryDto.LibraryResponse> LibraryInventoriesToLibraryResponses(List<LibraryInventory> libraryInventories);
+//    List<LibraryInventoryDto.LibraryResponse> LibraryInventoriesToLibraryResponses(List<LibraryInventory> libraryInventories);
 }
