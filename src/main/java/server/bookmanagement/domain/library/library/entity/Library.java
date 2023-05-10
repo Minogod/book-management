@@ -15,6 +15,7 @@ import java.util.List;
 @Setter
 public class Library extends BaseEntity {
     private String name;
+    private boolean isDeleted = false;
     @OneToMany(mappedBy = "library", cascade = CascadeType.REMOVE)
     @JsonManagedReference
     private List<LibraryInventory> libraryInventories;

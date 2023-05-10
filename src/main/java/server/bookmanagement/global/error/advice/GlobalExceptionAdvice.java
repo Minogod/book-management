@@ -63,7 +63,7 @@ public class GlobalExceptionAdvice {
 
         final ErrorResponse response = ErrorResponse.of(HttpStatus.BAD_REQUEST,
                 "Required request body is missing");
-
+        log.error(e.getMessage());
         return response;
     }
 
@@ -82,7 +82,6 @@ public class GlobalExceptionAdvice {
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
     public ErrorResponse handleException(Exception e) {
         log.error("# handle Exception", e);
-
 
         final ErrorResponse response = ErrorResponse.of(HttpStatus.INTERNAL_SERVER_ERROR);
 

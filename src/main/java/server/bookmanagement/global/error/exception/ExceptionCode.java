@@ -15,7 +15,8 @@ public enum ExceptionCode {
     ALREADY_RETURNED_BOOKS(403,"이미 반납 처리된 책 입니다."),
     LOAN_QUANTITY_LIMIT(403,"동일한 책은 2권 이상 대여 불가능 합니다."),
     MEMBER_DELETED(404,"탈퇴한 사용자입니다."),
-    BOOK_IS_DELETED(404,"삭제된 책 입니다.")
+    BOOK_IS_DELETED(404,"삭제된 책 입니다."),
+    LIBRARY_IS_DELETED(404,"삭제된 도서관 입니다.")
     ;
 
     @Getter

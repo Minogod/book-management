@@ -26,7 +26,7 @@ public class LibraryInventoryController {
     private final BookService bookService;
     private final LibraryInventoryMapper libraryInventoryMapper;
     @PostMapping
-    public ResponseEntity<?> RegistrationInLibrary(@RequestBody LibraryInventoryDto.Post post) {
+    public ResponseEntity<?> bookRegistrationInLibrary(@RequestBody LibraryInventoryDto.Post post) {
         Library library = libraryService.findById(post.getLibraryId());
         Book book = bookService.findById(post.getBookId());
         LibraryInventory libraryInventory = libraryInventoryMapper.LibraryInventoryPostToLibraryInventory(post);
@@ -35,7 +35,7 @@ public class LibraryInventoryController {
         libraryInventory.setBook(book);
         LibraryInventory registration = libraryInventoryService.registrationInLibrary(libraryInventory);
 
-        LibraryInventoryDto.Response response = libraryInventoryMapper.LibraryInventoryToLibraryInventoryResponse(registration);
+        LibraryInventoryDto.Response response = libraryInventoryMapper.LibraryInventoryToResponse(registration);
         return new ResponseEntity<>(new SingleResponseDto<>(response), HttpStatus.OK);
     }
 }
