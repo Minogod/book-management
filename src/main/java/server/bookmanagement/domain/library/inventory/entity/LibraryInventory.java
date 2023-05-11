@@ -19,6 +19,7 @@ public class LibraryInventory extends BaseEntity {
     private int loanQuantity; // 1 , 2  ... 5
     @Enumerated(value = EnumType.STRING)
     private LoanStatus loanStatus = LoanStatus.대여가능; // 모두 대여중
+    private boolean isDeleted = false;
     @ManyToOne
     @JoinColumn(name = "book_id")
     @JsonBackReference

@@ -17,6 +17,11 @@ public class LibraryInventoryDto {
         private int totalQuantity;
     }
     @Getter
+    @NoArgsConstructor
+    public static class Patch{
+        private int totalQuantity;
+    }
+    @Getter
     @Setter
     @NoArgsConstructor
     public static class BookResponse {
