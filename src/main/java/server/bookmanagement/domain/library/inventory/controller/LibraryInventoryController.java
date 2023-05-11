@@ -12,17 +12,21 @@ import server.bookmanagement.domain.library.inventory.mapper.LibraryInventoryMap
 import server.bookmanagement.domain.library.inventory.service.LibraryInventoryService;
 import server.bookmanagement.domain.library.library.entity.Library;
 import server.bookmanagement.domain.library.library.service.LibraryService;
+import server.bookmanagement.domain.loan.entity.Loan;
+import server.bookmanagement.domain.loan.service.LoanService;
 import server.bookmanagement.global.dto.SingleResponseDto;
 
 import javax.transaction.Transactional;
+import java.util.List;
 
 @RestController
-@RequestMapping("/library/inventory")
+@RequestMapping("/libraries/inventories")
 @RequiredArgsConstructor
 public class LibraryInventoryController {
     private final LibraryInventoryService libraryInventoryService;
     private final LibraryService libraryService;
     private final BookService bookService;
+    private final LoanService loanService;
     private final LibraryInventoryMapper libraryInventoryMapper;
     @PostMapping
     public ResponseEntity<?> bookRegistrationInLibrary(@RequestBody LibraryInventoryDto.Post post) {
@@ -53,6 +57,9 @@ public class LibraryInventoryController {
     @DeleteMapping("/{library-inventory-id}")
     public ResponseEntity<?> bookDeleteInLibrary(@PathVariable("library-inventory-id") long libraryInventoryId) {
         LibraryInventory libraryInventory = libraryInventoryService.findById(libraryInventoryId);
+//        List<Loan> byLibraryInventoryId = loanService.findByLibraryInventoryId(libraryInventoryId);
+//        loanService.setReturn(byLibraryInventoryId);
+
         LibraryInventory deletedLibraryInventory = libraryInventoryService.bookDeleteInLibrary(libraryInventory);
 
         LibraryInventoryDto.Response response = libraryInventoryMapper.LibraryInventoryToResponse(deletedLibraryInventory);

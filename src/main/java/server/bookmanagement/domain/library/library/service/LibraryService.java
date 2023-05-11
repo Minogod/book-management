@@ -6,6 +6,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import server.bookmanagement.domain.library.inventory.entity.LibraryInventory;
 import server.bookmanagement.domain.library.library.entity.Library;
+import server.bookmanagement.domain.loan.service.LoanService;
 import server.bookmanagement.global.error.exception.BusinessLogicException;
 import server.bookmanagement.global.error.exception.ExceptionCode;
 import server.bookmanagement.domain.library.library.repository.LibraryRepository;
@@ -37,6 +38,7 @@ public class LibraryService {
         for(LibraryInventory libraryInventory : libraryInventories) {
             libraryInventory.setDeleted(true);
         }
+
         return libraryRepository.save(library);
     }
 

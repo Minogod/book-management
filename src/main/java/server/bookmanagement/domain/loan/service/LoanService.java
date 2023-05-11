@@ -1,7 +1,6 @@
 package server.bookmanagement.domain.loan.service;
 
 import lombok.RequiredArgsConstructor;
-import net.bytebuddy.implementation.bytecode.Duplication;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import server.bookmanagement.domain.loan.entity.Loan;
@@ -33,6 +32,15 @@ public class LoanService {
         loan.setLoanStats(Loan.LoanStats.반납완료);
         return loanRepository.save(loan);
     }
+    public List<Loan> findByLibraryInventoryId(long libraryInventoryId) {
+        return loanRepository.findByLibraryInventoryId(libraryInventoryId);
+    }
+    public void setReturn(List<Loan> loans) {
+        for(Loan loan : loans) {
+            loan.setReturnedAt(LocalDateTime.now());
+            loan.setLoanStats(Loan.LoanStats.반납완료);
+        }
+    }
     public Loan findById(long id) {
         Optional<Loan> optionalLoan = loanRepository.findById(id);
         return optionalLoan.orElseThrow(()->new BusinessLogicException(ExceptionCode.LOAN_NOT_FOUND));
@@ -45,7 +53,7 @@ public class LoanService {
 
     public void validDuplicationLoan(Loan loan) {
         Member member = loan.getMember();
-        List<Loan> loanBooks = member.getLoanBooks();
+        List<Loan> loanBooks = member.getLoans();
         int count = 0;
         for(Loan loanedBook : loanBooks) {
             if(loanedBook.getLibraryInventory().getId().equals(loan.getLibraryInventory().getId())) {

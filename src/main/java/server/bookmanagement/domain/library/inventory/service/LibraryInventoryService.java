@@ -3,10 +3,13 @@ package server.bookmanagement.domain.library.inventory.service;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import server.bookmanagement.domain.library.inventory.repository.LibraryInventoryRepository;
+import server.bookmanagement.domain.loan.entity.Loan;
+import server.bookmanagement.domain.loan.service.LoanService;
 import server.bookmanagement.global.error.exception.BusinessLogicException;
 import server.bookmanagement.global.error.exception.ExceptionCode;
 import server.bookmanagement.domain.library.inventory.entity.LibraryInventory;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -14,6 +17,7 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class LibraryInventoryService {
     private final LibraryInventoryRepository libraryInventoryRepository;
+    private final LoanService loanService;
 
 
     public LibraryInventory bookRegistrationInLibrary(LibraryInventory libraryInventory) {
@@ -61,7 +65,7 @@ public class LibraryInventoryService {
     public LibraryInventory bookDeleteInLibrary(LibraryInventory libraryInventory) {
         libraryInventory.setDeleted(true);
         return libraryInventoryRepository.save(libraryInventory);
-        //Todo : 누가 책을 대여중인데 삭제시키려면
+        //Todo : 누가 책을 대여중인데 삭제시키려면 ? 반납가능 and
         // 삭제되게함. -> 그 member
     }
 

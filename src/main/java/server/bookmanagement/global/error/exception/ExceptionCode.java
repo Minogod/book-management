@@ -19,7 +19,8 @@ public enum ExceptionCode {
     LIBRARY_IS_DELETED(404,"삭제된 도서관 입니다."),
     LIBRARY_INVENTORY_IS_DELETED(404,"도서관에서 삭제된 도서입니다."),
     QUANTITY_UPDATE_IMPOSSIBLE(403,"변경하려는 수량보다 대여중인 책이 더 많습니다."),
-    LIBRARY_INVENTORY_ALREADY_EXISTS(403,"해당 도서관에 이미 등록된 책입니다.")
+    LIBRARY_INVENTORY_ALREADY_EXISTS(403,"해당 도서관에 이미 등록된 책입니다."),
+    UNABLE_MEMBER_ACCOUNT_WITHDRAWAL(403,"대여중인 책이 있어서 탈퇴가 불가능 합니다.")
     ;
 
     @Getter

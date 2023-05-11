@@ -10,6 +10,8 @@ import server.bookmanagement.domain.member.mapper.MemberMapper;
 import server.bookmanagement.global.dto.SingleResponseDto;
 import server.bookmanagement.domain.member.service.MemberService;
 
+import javax.transaction.Transactional;
+
 @RestController
 @RequestMapping("/members")
 @RequiredArgsConstructor
@@ -25,6 +27,7 @@ public class MemberController {
         return new ResponseEntity<>(new SingleResponseDto<>(response), HttpStatus.CREATED);
     }
 
+    @Transactional
     @DeleteMapping("{member-id}")
     public ResponseEntity<?> deleteMember(@PathVariable("member-id") long memberId) {
         Member member = memberService.findById(memberId);
