@@ -25,7 +25,7 @@ public class Member extends BaseEntity {
     private Status status = Status.ACTIVE;
     @OneToMany(mappedBy = "member", cascade = CascadeType.REMOVE)
     @JsonManagedReference
-    private List<Loan> loanBooks = new ArrayList<>();
+    private List<Loan> loans = new ArrayList<>();
 
     //loan 에다가 회원의 연체패널티기간을 정해놓으면,
     //loan -> 책 한권빌릴때마다 history 식으로 남는거 ( 자꾸 많이 쌓이게됨 )

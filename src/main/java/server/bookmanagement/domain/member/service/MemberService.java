@@ -46,7 +46,7 @@ public class MemberService {
         }
     }
     public boolean isOverQuantity(Member member) {
-        List<Loan> loanBooks = member.getLoanBooks();
+        List<Loan> loanBooks = member.getLoans();
         long loanNum = 0;
 
         for(Loan loan : loanBooks) {
@@ -64,15 +64,14 @@ public class MemberService {
     }
 
     public Member deleteMember(Member member) {
+        boolean hasActiveLoan = member.getLoans().stream()
+                .anyMatch(loan -> loan.getLoanStats().equals(Loan.LoanStats.대여중));
+
+        if (hasActiveLoan) {
+            throw new BusinessLogicException(ExceptionCode.UNABLE_MEMBER_ACCOUNT_WITHDRAWAL);
+        }
         member.setStatus(Member.Status.DELETED);
         return memberRepository.save(member);
-        // 논리적삭제
-        // 예시 : 탈퇴후 30일간은 사용자 정보 완전삭제 X
-        // 게시글도 나중에 혹시 완전 삭제 X
-
-        // S3에 이미지 업로드 할때 게시글 삭제되면 이미지 같이 삭제시킬라고 노력했는데
-        // 사실 운영하면 어디 클라우드 용량 이런거 신경 크게 안쓴데
-        // 그냥 최대한 함부러 물리적삭제 하는거 조심한데
     }
 
 

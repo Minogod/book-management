@@ -6,10 +6,13 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import server.bookmanagement.domain.book.repository.BookRepository;
 import server.bookmanagement.domain.book.entity.Book;
+import server.bookmanagement.domain.library.inventory.entity.LibraryInventory;
 import server.bookmanagement.global.error.exception.BusinessLogicException;
 import server.bookmanagement.global.error.exception.ExceptionCode;
 
+import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -38,11 +41,33 @@ public class BookService {
         return bookRepository.save(book);
     }
 
-    public Book findById(long id){
-        Optional<Book> optionalBook = bookRepository.findById(id);
-        Book book = optionalBook.orElseThrow(() -> new BusinessLogicException(ExceptionCode.BOOK_NOT_FOUND));
-        if(book.isDeleted()) {
-            throw new BusinessLogicException(ExceptionCode.BOOK_IS_DELETED);
-        } else return book;
+    public Book findById(long id) {
+        Book book = findBookById(id);
+        validateBookNotDeleted(book);
+        filterDeletedLibraryInventories(book);
+
+        return book;
     }
+
+    private Book findBookById(long id) {
+        return bookRepository.findById(id)
+                .orElseThrow(() -> new BusinessLogicException(ExceptionCode.BOOK_NOT_FOUND));
+    }
+
+    private void validateBookNotDeleted(Book book) {
+        if (book.isDeleted()) {
+            throw new BusinessLogicException(ExceptionCode.BOOK_IS_DELETED);
+        }
+    }
+
+    private void filterDeletedLibraryInventories(Book book) {
+        List<LibraryInventory> filteredLibraryInventories = book.getLibraryInventories()
+                .stream()
+                .filter(libraryInventory -> !libraryInventory.isDeleted())
+                .collect(Collectors.toList());
+
+        book.setLibraryInventories(filteredLibraryInventories);
+    }
+
+
 }

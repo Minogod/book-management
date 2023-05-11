@@ -19,6 +19,7 @@ public class Loan {
     private LocalDateTime returnedAt;
     @Enumerated(value = EnumType.STRING)
     private LoanStats loanStats = LoanStats.대여중;
+    // 회원이 삭제될때, 책이 삭제될때, 도서관이 삭제될때, 도서관이 삭제될때
     @ManyToOne
     @JoinColumn(name = "member_id")
     @JsonBackReference

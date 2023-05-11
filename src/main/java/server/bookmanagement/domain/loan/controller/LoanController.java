@@ -66,6 +66,7 @@ public class LoanController {
         // 조건0. 이미 반납 상태이면 반납 처리 되면 안됨
         // 조건1. 해당 회원이 빌린 책이 맞는지 확인 필요 -> 안맞을시 예외 오류 response ->
         // 조건2. 날짜 확인후 연체 여부확인 및 패널티 부여 (연체된 날짜만큼 대여 불가능) -> 정상작동 및 member 상태변경
+        // 책반납
         loanService.validReturn(loan);
         loanService.validMemberMatch(loan, post.getMemberId());
         loan.setReturnedAt(LocalDateTime.now());
