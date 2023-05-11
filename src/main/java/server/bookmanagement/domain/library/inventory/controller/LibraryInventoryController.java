@@ -30,9 +30,9 @@ public class LibraryInventoryController {
         Library library = libraryService.findById(post.getLibraryId());
         Book book = bookService.findById(post.getBookId());
         LibraryInventory libraryInventory = libraryInventoryMapper.LibraryInventoryPostToLibraryInventory(post);
-
         libraryInventory.setLibrary(library);
         libraryInventory.setBook(book);
+
         LibraryInventory registration = libraryInventoryService.bookRegistrationInLibrary(libraryInventory);
 
         LibraryInventoryDto.Response response = libraryInventoryMapper.LibraryInventoryToResponse(registration);

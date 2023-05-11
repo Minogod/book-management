@@ -13,6 +13,7 @@ import server.bookmanagement.domain.library.library.dto.LibraryDto;
 import server.bookmanagement.domain.library.library.mapper.LibraryMapper;
 import server.bookmanagement.domain.library.library.service.LibraryService;
 
+import javax.transaction.Transactional;
 import java.util.List;
 
 @RestController
@@ -56,7 +57,7 @@ public class LibraryController {
         return new ResponseEntity<>(new MultiResponseDto<>(response,librariesPage), HttpStatus.OK);
 
     }
-
+    @Transactional
     @DeleteMapping("{library-id}")
     public ResponseEntity<?> deleteLibrary(@PathVariable("library-id") long libraryId) {
         Library library = libraryService.findById(libraryId);

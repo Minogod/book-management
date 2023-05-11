@@ -7,6 +7,7 @@ import server.bookmanagement.global.error.exception.BusinessLogicException;
 import server.bookmanagement.global.error.exception.ExceptionCode;
 import server.bookmanagement.domain.library.inventory.entity.LibraryInventory;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -16,6 +17,23 @@ public class LibraryInventoryService {
 
 
     public LibraryInventory bookRegistrationInLibrary(LibraryInventory libraryInventory) {
+        //LibraryInventory 전체 가지고오기
+        //bookId, LibraryId 같은거 찾기
+        //LibraryInventory 가 isDeleted true 이면 -> 새로만들기
+        //false 이면 -> 예외처리
+        //있으면 예외처리 없으면 save
+        List<LibraryInventory> libraryInventories = findAll();
+        boolean isDuplicate = libraryInventories.stream()
+                .anyMatch(libraryInventory1 ->
+                        libraryInventory1.getBook().getId().equals(libraryInventory.getBook().getId()) &&
+                                libraryInventory1.getLibrary().getId().equals(libraryInventory.getLibrary().getId()) &&
+                                !libraryInventory1.isDeleted()
+                );
+
+        if (isDuplicate) {
+            throw new BusinessLogicException(ExceptionCode.LIBRARY_INVENTORY_ALREADY_EXISTS);
+        }
+
         return libraryInventoryRepository.save(libraryInventory);
     }
 
@@ -29,13 +47,22 @@ public class LibraryInventoryService {
             throw new BusinessLogicException(ExceptionCode.QUANTITY_UPDATE_IMPOSSIBLE);
         } else {
             Optional.of(libraryInventory.getTotalQuantity()).ifPresent(findLibraryInventory::setTotalQuantity);
+            if( loanQuantity == updateTotalQuantity) {
+                findLibraryInventory.setLoanStatus(LibraryInventory.LoanStatus.모두대여중);
+            }
             return libraryInventoryRepository.save(findLibraryInventory);
         }
+    }
+
+    public List<LibraryInventory> findAll() {
+        return libraryInventoryRepository.findAll();
     }
 
     public LibraryInventory bookDeleteInLibrary(LibraryInventory libraryInventory) {
         libraryInventory.setDeleted(true);
         return libraryInventoryRepository.save(libraryInventory);
+        //Todo : 누가 책을 대여중인데 삭제시키려면
+        // 삭제되게함. -> 그 member
     }
 
     public void addLoanQuantity(LibraryInventory libraryInventory) {
