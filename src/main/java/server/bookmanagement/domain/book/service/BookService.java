@@ -2,7 +2,6 @@ package server.bookmanagement.domain.book.service;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import server.bookmanagement.domain.book.repository.BookRepository;
@@ -11,7 +10,6 @@ import server.bookmanagement.domain.library.inventory.entity.LibraryInventory;
 import server.bookmanagement.global.error.exception.BusinessLogicException;
 import server.bookmanagement.global.error.exception.ExceptionCode;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
