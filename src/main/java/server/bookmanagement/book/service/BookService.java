@@ -25,3 +25,4 @@ public class BookService {
         return optionalBook.orElseThrow(() -> new BusinessLogicException(ExceptionCode.BOOK_NOT_FOUND));
     }
 }
+
