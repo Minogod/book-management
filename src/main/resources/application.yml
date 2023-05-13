@@ -14,6 +14,14 @@ spring:
       hibernate:
         format_sql: true
 #        default_batch_fetch_size: 1000
+jwt:
+  key: ENC(LjuWVsYfzpKEDBb7y1w6/Q6352rGfYBVIT0qJfktJwael4SdhN5XG86bhnIkVa0c)
+  access-token-expiration-minutes: 420
+  refresh-token-expiration-minutes: 420
+
+mail:
+  address:
+    admin: a@gmail.com
 loan_limited: 2
 max_loan_day: 14
 max_loan_quantity: 5
