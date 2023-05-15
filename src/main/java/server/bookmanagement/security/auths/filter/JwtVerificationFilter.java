@@ -16,7 +16,6 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.security.SignatureException;
 import java.util.List;
 import java.util.Map;
 
@@ -66,10 +65,10 @@ public class JwtVerificationFilter extends OncePerRequestFilter {
     }
 
     private void setAuthenticationToContext(Map<String, Object> claims) {
-        String username = (String) claims.get("username");
-        List<GrantedAuthority> authorities = authorityUtils.createdAuthorities((List)claims.get("roles"));
-        log.info("# 토큰값 username: " + username + " # 권한 - " + authorities.toString());
-        Authentication authentication = new UsernamePasswordAuthenticationToken(username,null, authorities);
+        Object userId = claims.get("userId");
+        List<GrantedAuthority> authorities = authorityUtils.createdAuthorities((List<String>)claims.get("roles"));
+        log.info("# 토큰값 userId: " + userId + " # 권한 - " + authorities.toString());
+        Authentication authentication = new UsernamePasswordAuthenticationToken(userId,null, authorities);
         SecurityContextHolder.getContext().setAuthentication(authentication);
     }
 }

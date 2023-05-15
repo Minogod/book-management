@@ -2,6 +2,7 @@ package server.bookmanagement.security.auths.filter;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.SneakyThrows;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -18,7 +19,7 @@ import java.io.IOException;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
-
+@Slf4j
 public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilter {
     private final AuthenticationManager authenticationManager;
     private final JwtTokenizer jwtTokenizer;
@@ -61,10 +62,11 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
 
     private String delegateAccessToken(Member member) {
         Map<String, Object> claims = new HashMap<>();
-        claims.put("username", member.getEmail());
+        claims.put("userId", member.getId());
+        log.error(member.getRoles().toString());
         claims.put("roles", member.getRoles());
 
-        String subject = member.getEmail();
+        String subject = "user"+member.getId();
         Date expiration = jwtTokenizer.getTokenExpiration(jwtTokenizer.getAccessTokenExpirationMinutes());
         String base64EncodedSecretKey = jwtTokenizer.encodeBase64SecretKey(jwtTokenizer.getSecretKey());
 
@@ -74,7 +76,8 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
     }
 
     private String delegateRefreshToken(Member member){
-        String subject = member.getEmail();
+//        String subject = member.getEmail();
+        String subject = "user"+member.getId();
 
         Date expiration = jwtTokenizer.getTokenExpiration(jwtTokenizer.getRefreshTokenExpirationMinutes());
 

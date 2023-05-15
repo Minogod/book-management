@@ -15,7 +15,7 @@ spring:
         format_sql: true
 #        default_batch_fetch_size: 1000
 jwt:
-  key: ENC(LjuWVsYfzpKEDBb7y1w6/Q6352rGfYBVIT0qJfktJwael4SdhN5XG86bhnIkVa0c)
+  key: minho123123123123123123123123123123123
   access-token-expiration-minutes: 420
   refresh-token-expiration-minutes: 420
 
@@ -25,3 +25,8 @@ mail:
 loan_limited: 2
 max_loan_day: 14
 max_loan_quantity: 5
+
+
+jasypt: #패스워드 암호화/복호화 키
+  encryptor:
+    password: ${jasypt_password}

@@ -36,11 +36,12 @@ public class MemberDetailsService implements UserDetailsService {
             setEmail(member.getEmail());
             setPassword(member.getPassword());
             setPhone(member.getPhone());
+            setRoles(member.getRoles());
         }
 
         @Override
         public Collection<? extends GrantedAuthority> getAuthorities(){
-            return authorityUtils.createdAuthorities(getRoles());
+            return authorityUtils.createdAuthorities(this.getRoles());
         }
 
         @Override

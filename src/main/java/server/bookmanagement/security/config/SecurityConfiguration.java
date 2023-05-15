@@ -1,7 +1,9 @@
 package server.bookmanagement.security.config;
 
+import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -22,17 +24,12 @@ import static org.springframework.security.config.Customizer.withDefaults;
 
 @Configuration
 @EnableWebSecurity
+@RequiredArgsConstructor
 public class SecurityConfiguration {
 
     private final JwtTokenizer jwtTokenizer;
     private final CustomAuthorityUtils authorityUtils;
     private final CorsFilter corsFilter;
-
-    public SecurityConfiguration(JwtTokenizer jwtTokenizer, CustomAuthorityUtils authorityUtils, CorsFilter corsFilter){
-        this.jwtTokenizer = jwtTokenizer;
-        this.authorityUtils = authorityUtils;
-        this.corsFilter = corsFilter;
-    }
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception{
@@ -48,6 +45,7 @@ public class SecurityConfiguration {
                 .apply(new CustomFilterConfigurer())
                 .and()
                 .authorizeRequests(authorize -> authorize
+                        .antMatchers(HttpMethod.POST, "/libraries").hasRole("ADMIN")
                         .anyRequest().permitAll());
 
         return http.build();

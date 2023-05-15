@@ -1,24 +1,37 @@
 package server.bookmanagement.domain.member.service;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import server.bookmanagement.domain.loan.entity.Loan;
 import server.bookmanagement.domain.member.entity.Member;
 import server.bookmanagement.domain.member.repository.MemberRepository;
 import server.bookmanagement.global.error.exception.BusinessLogicException;
 import server.bookmanagement.global.error.exception.ExceptionCode;
+import server.bookmanagement.security.auths.utils.CustomAuthorityUtils;
 
 import java.util.List;
 import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
+@Slf4j
 public class MemberService {
-    private final MemberRepository memberRepository;
     @Value("${max_loan_quantity}")
     private long maxLoanQuantity;
+    private final MemberRepository memberRepository;
+    private final PasswordEncoder passwordEncoder;
+    private final CustomAuthorityUtils authorityUtils;
+
     public Member createMember(Member member){
+        String encryptedPassword = passwordEncoder.encode(member.getPassword());
+        log.info("Encrypted password: {}", encryptedPassword);
+        member.setPassword(encryptedPassword);
+
+        List<String> roles = authorityUtils.createRoles(member.getEmail());
+        member.setRoles(roles);
         return memberRepository.save(member);
     }
     public Member findById(long id){
