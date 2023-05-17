@@ -1,6 +1,8 @@
 package server.bookmanagement.domain.library.inventory.entity;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.Getter;
 import lombok.Setter;
@@ -11,6 +13,7 @@ import server.bookmanagement.domain.loan.entity.Loan;
 import server.bookmanagement.util.BaseEntity;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -25,16 +28,18 @@ public class LibraryInventory extends BaseEntity {
     private boolean isDeleted = false;
     @ManyToOne
     @JoinColumn(name = "book_id")
-    @JsonBackReference
+    @JsonBackReference(value = "book_libraryInventories")
+//    @JsonIgnoreProperties({"hibernateLazyInitializer","handler"})
     private Book book;
     @ManyToOne
     @JoinColumn(name = "library_id")
-    @JsonBackReference
+    @JsonBackReference(value = "library_libraryInventories")
+//    @JsonIgnoreProperties({"hibernateLazyInitializer","handler"})
     private Library library;
 
     @OneToMany(mappedBy = "libraryInventory", cascade = CascadeType.REMOVE)
-    @JsonManagedReference
-    private List<Loan> loans;
+    @JsonManagedReference(value = "loan_libraryInventory")
+    private List<Loan> loans = new ArrayList<>();
 
     public enum LoanStatus{
         대여가능, 모두대여중

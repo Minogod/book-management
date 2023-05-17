@@ -1,7 +1,6 @@
 package server.bookmanagement.domain.loan.dto;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
+import lombok.*;
 import server.bookmanagement.domain.library.inventory.dto.LibraryInventoryDto;
 import server.bookmanagement.domain.loan.entity.Loan;
 import server.bookmanagement.domain.member.dto.MemberDto;
@@ -25,4 +24,6 @@ public class LoanDto {
         private LocalDateTime returnedAt;
         private Loan.LoanStats loanStats;
     }
+
+    // 빌더전략 Getter, Setter 잘써라
 }

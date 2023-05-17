@@ -1,6 +1,7 @@
 package server.bookmanagement.domain.loan.entity;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.Getter;
 import lombok.Setter;
 import server.bookmanagement.domain.library.inventory.entity.LibraryInventory;
@@ -22,11 +23,13 @@ public class Loan {
     // 회원이 삭제될때, 책이 삭제될때, 도서관이 삭제될때, 도서관이 삭제될때
     @ManyToOne
     @JoinColumn(name = "member_id")
-    @JsonBackReference
+    @JsonBackReference(value = "member_loans")
+//    @JsonIgnoreProperties({"hibernateLazyInitializer","handler"})
     private Member member;
     @ManyToOne
-    @JsonBackReference
+    @JsonBackReference(value = "loan_libraryInventory")
     @JoinColumn(name = "library_inventory_id")
+//    @JsonIgnoreProperties({"hibernateLazyInitializer","handler"})
     private LibraryInventory libraryInventory;
 
     public enum LoanStats {

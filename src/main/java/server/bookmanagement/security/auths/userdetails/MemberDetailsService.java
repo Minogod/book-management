@@ -24,10 +24,8 @@ public class MemberDetailsService implements UserDetailsService {
         Member memberByEmail = memberService.findMemberByEmail(username);
 //        memberCacheRepository.setMember(memberByEmail);
 
-
         return new MemberDetails(memberByEmail);
     }
-
 
     public final class MemberDetails extends Member implements UserDetails {
         MemberDetails(Member member){

@@ -2,6 +2,16 @@ server:
   port: 8080
 
 spring:
+  jackson:
+    serialization:
+      write-dates-as-timestamps: false
+  cache:
+    type: redis
+    redis:
+      cache-null-values: true
+  redis:
+    host: localhost
+    port: 6379
   datasource:
     url: jdbc:mysql://localhost:3306/book_management?serverTimezone=Asia/Seoul
     username: root

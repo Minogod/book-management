@@ -8,7 +8,9 @@ import server.bookmanagement.util.BaseEntity;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.OneToMany;
+import java.util.ArrayList;
 import java.util.List;
 @Entity
 @Getter
@@ -17,6 +19,6 @@ public class Library extends BaseEntity {
     private String name;
     private boolean isDeleted = false;
     @OneToMany(mappedBy = "library", cascade = CascadeType.REMOVE)
-    @JsonManagedReference
-    private List<LibraryInventory> libraryInventories;
+    @JsonManagedReference(value = "library_libraryInventories")
+    private List<LibraryInventory> libraryInventories = new ArrayList<>();
 }
