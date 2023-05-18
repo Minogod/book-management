@@ -2,6 +2,7 @@ package server.bookmanagement.redis.config;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.jsontype.BasicPolymorphicTypeValidator;
+import com.fasterxml.jackson.databind.module.SimpleModule;
 import com.fasterxml.jackson.datatype.hibernate5.Hibernate5Module;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import lombok.RequiredArgsConstructor;
@@ -11,6 +12,9 @@ import org.springframework.cache.annotation.EnableCaching;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Primary;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.data.redis.cache.CacheKeyPrefix;
 import org.springframework.data.redis.cache.RedisCacheConfiguration;
 import org.springframework.data.redis.cache.RedisCacheManager;
@@ -62,6 +66,11 @@ public class RedisConfig {
     @Bean
     @Primary
     public CacheManager testCacheManager(RedisConnectionFactory cf) {
+        //PageImpl 역직렬화를 위해 module 추가
+        SimpleModule module = new SimpleModule();
+        module.addDeserializer(PageRequest.class, new PageRequestJsonDeserializer());
+        module.addDeserializer(PageImpl.class, new PageImplJsonDeserializer());
+        module.addDeserializer(Sort.class, new SortJsonDeserializer());
         //LocalDateTime Json 역직렬화 오류 Custom ObjectMapper 사용
         BasicPolymorphicTypeValidator typeValidator = BasicPolymorphicTypeValidator.builder()
                 .allowIfBaseType(Object.class)
@@ -69,6 +78,7 @@ public class RedisConfig {
         ObjectMapper objectMapper = new ObjectMapper();
         objectMapper.registerModule(new JavaTimeModule());
         objectMapper.registerModule(new Hibernate5Module());
+        objectMapper.registerModule(module);
         objectMapper.activateDefaultTyping(typeValidator, ObjectMapper.DefaultTyping.NON_FINAL);
 
         GenericJackson2JsonRedisSerializer jsonRedisSerializer = new GenericJackson2JsonRedisSerializer(objectMapper);

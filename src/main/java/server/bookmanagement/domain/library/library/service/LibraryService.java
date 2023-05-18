@@ -35,7 +35,7 @@ public class LibraryService {
         Optional.ofNullable(library.getName()).ifPresent(findLibrary::setName);
         return libraryRepository.save(findLibrary);
     }
-    @Cacheable(value = "libraries", cacheManager = "testCacheManager")
+    @Cacheable(value = "libraries",key = "#page + '-' + #size", cacheManager = "testCacheManager")
     public Page<Library> getLibraries(int page, int size) {
         return libraryRepository.findByIsDeletedFalse(PageRequest.of(page,size));
     }
