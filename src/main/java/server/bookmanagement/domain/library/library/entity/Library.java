@@ -1,5 +1,6 @@
 package server.bookmanagement.domain.library.library.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.Getter;
 import lombok.Setter;
@@ -19,6 +20,7 @@ public class Library extends BaseEntity {
     private String name;
     private boolean isDeleted = false;
     @OneToMany(mappedBy = "library", cascade = CascadeType.REMOVE)
-    @JsonManagedReference(value = "library_libraryInventories")
+//    @JsonManagedReference(value = "library_libraryInventories")
+//    @JsonIgnoreProperties("libraryInventories")
     private List<LibraryInventory> libraryInventories = new ArrayList<>();
 }

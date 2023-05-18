@@ -1,6 +1,8 @@
 package server.bookmanagement.domain.library.library.service;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.CachePut;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -21,20 +23,23 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class LibraryService {
     private final LibraryRepository libraryRepository;
+    @CachePut(value = "library", key = "#result.id", unless = "#result == null", cacheManager = "testCacheManager")
     public Library createLibrary(Library library) {
-        return libraryRepository.save(library);
+        Library save = libraryRepository.save(library);
+        save.setLibraryInventories(null);
+        return save;
     }
-
+    @CachePut(value = "library", key = "#result.id", unless = "#result == null", cacheManager = "testCacheManager")
     public Library pathchLibrary(Library library) {
         Library findLibrary = findById(library.getId());
         Optional.ofNullable(library.getName()).ifPresent(findLibrary::setName);
         return libraryRepository.save(findLibrary);
     }
-
+    @Cacheable(value = "libraries", cacheManager = "testCacheManager")
     public Page<Library> getLibraries(int page, int size) {
         return libraryRepository.findByIsDeletedFalse(PageRequest.of(page,size));
     }
-
+    @CacheEvict(value = "library", key = "#library.id")
     public Library deleteLibrary(Library library) {
         library.setDeleted(true);
         List<LibraryInventory> libraryInventories = library.getLibraryInventories();

@@ -1,6 +1,8 @@
 package server.bookmanagement.domain.library.inventory.service;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.cache.annotation.CachePut;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import server.bookmanagement.domain.library.inventory.repository.LibraryInventoryRepository;
 import server.bookmanagement.global.error.exception.BusinessLogicException;
@@ -15,7 +17,7 @@ import java.util.Optional;
 public class LibraryInventoryService {
     private final LibraryInventoryRepository libraryInventoryRepository;
 
-
+    @CachePut(value = "libraryInventory",key = "#result.id",unless = "#result == null", cacheManager = "testCacheManager")
     public LibraryInventory bookRegistrationInLibrary(LibraryInventory libraryInventory) {
         //LibraryInventory 전체 가지고오기
         //bookId, LibraryId 같은거 찾기
@@ -23,7 +25,6 @@ public class LibraryInventoryService {
         //false 이면 -> 예외처리
         //있으면 예외처리 없으면 save
         doubleCheck(libraryInventory);
-
         return libraryInventoryRepository.save(libraryInventory);
     }
 
@@ -88,7 +89,7 @@ public class LibraryInventoryService {
         }
     }
 
-
+    @Cacheable(value = "libraryInventory",key = "#id",unless = "#result == null", cacheManager = "testCacheManager")
     public LibraryInventory findById(long id) {
         Optional<LibraryInventory> optionalLibraryInventory = libraryInventoryRepository.findById(id);
         LibraryInventory libraryInventory = optionalLibraryInventory.orElseThrow(() -> new BusinessLogicException(ExceptionCode.LIBRARY_INVENTORY_NOT_FOUND));

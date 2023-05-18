@@ -23,7 +23,7 @@ spring:
     properties:
       hibernate:
         format_sql: true
-#        default_batch_fetch_size: 1000
+        default_batch_fetch_size: 1000
 jwt:
   key: minho123123123123123123123123123123123
   access-token-expiration-minutes: 420

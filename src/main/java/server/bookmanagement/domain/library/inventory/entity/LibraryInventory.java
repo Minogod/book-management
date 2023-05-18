@@ -28,13 +28,13 @@ public class LibraryInventory extends BaseEntity {
     private boolean isDeleted = false;
     @ManyToOne
     @JoinColumn(name = "book_id")
-    @JsonBackReference(value = "book_libraryInventories")
-//    @JsonIgnoreProperties({"hibernateLazyInitializer","handler"})
+//    @JsonBackReference(value = "book_libraryInventories")
+    @JsonIgnoreProperties("libraryInventories") //Book 쪽에서 LibraryInventories 쪽에서 직렬화 제외
     private Book book;
     @ManyToOne
     @JoinColumn(name = "library_id")
-    @JsonBackReference(value = "library_libraryInventories")
-//    @JsonIgnoreProperties({"hibernateLazyInitializer","handler"})
+//    @JsonBackReference(value = "library_libraryInventories")
+    @JsonIgnoreProperties("libraryInventories")
     private Library library;
 
     @OneToMany(mappedBy = "libraryInventory", cascade = CascadeType.REMOVE)
