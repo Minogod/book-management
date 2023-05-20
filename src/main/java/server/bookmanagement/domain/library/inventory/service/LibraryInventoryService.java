@@ -1,15 +1,14 @@
 package server.bookmanagement.domain.library.inventory.service;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.cache.annotation.CachePut;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import server.bookmanagement.domain.library.inventory.repository.LibraryInventoryRepository;
-import server.bookmanagement.domain.loan.entity.Loan;
-import server.bookmanagement.domain.loan.service.LoanService;
 import server.bookmanagement.global.error.exception.BusinessLogicException;
 import server.bookmanagement.global.error.exception.ExceptionCode;
 import server.bookmanagement.domain.library.inventory.entity.LibraryInventory;
 
-import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -17,15 +16,19 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class LibraryInventoryService {
     private final LibraryInventoryRepository libraryInventoryRepository;
-    private final LoanService loanService;
 
-
+    @CachePut(value = "libraryInventory",key = "#result.id",unless = "#result == null", cacheManager = "testCacheManager")
     public LibraryInventory bookRegistrationInLibrary(LibraryInventory libraryInventory) {
         //LibraryInventory 전체 가지고오기
         //bookId, LibraryId 같은거 찾기
         //LibraryInventory 가 isDeleted true 이면 -> 새로만들기
         //false 이면 -> 예외처리
         //있으면 예외처리 없으면 save
+        doubleCheck(libraryInventory);
+        return libraryInventoryRepository.save(libraryInventory);
+    }
+
+    private void doubleCheck(LibraryInventory libraryInventory) {
         List<LibraryInventory> libraryInventories = findAll();
         boolean isDuplicate = libraryInventories.stream()
                 .anyMatch(libraryInventory1 ->
@@ -37,8 +40,6 @@ public class LibraryInventoryService {
         if (isDuplicate) {
             throw new BusinessLogicException(ExceptionCode.LIBRARY_INVENTORY_ALREADY_EXISTS);
         }
-
-        return libraryInventoryRepository.save(libraryInventory);
     }
 
     public LibraryInventory updateLibraryInventory(LibraryInventory libraryInventory) {
@@ -88,7 +89,7 @@ public class LibraryInventoryService {
         }
     }
 
-
+    @Cacheable(value = "libraryInventory",key = "#id",unless = "#result == null", cacheManager = "testCacheManager")
     public LibraryInventory findById(long id) {
         Optional<LibraryInventory> optionalLibraryInventory = libraryInventoryRepository.findById(id);
         LibraryInventory libraryInventory = optionalLibraryInventory.orElseThrow(() -> new BusinessLogicException(ExceptionCode.LIBRARY_INVENTORY_NOT_FOUND));
