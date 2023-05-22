@@ -10,7 +10,7 @@ import server.bookmanagement.domain.member.entity.Member;
 import server.bookmanagement.domain.member.repository.MemberRepository;
 import server.bookmanagement.global.error.exception.BusinessLogicException;
 import server.bookmanagement.global.error.exception.ExceptionCode;
-import server.bookmanagement.security.auths.utils.CustomAuthorityUtils;
+import server.bookmanagement.config.security.auths.utils.CustomAuthorityUtils;
 
 import java.util.List;
 import java.util.Optional;

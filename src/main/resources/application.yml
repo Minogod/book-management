@@ -10,12 +10,12 @@ spring:
     redis:
       cache-null-values: true
   redis:
-    host: localhost
+    host: ENC(kB3ZXWngfYMlqEWNf2xRdvZ3Jp2Ubum6)
     port: 6379
   datasource:
-    url: jdbc:mysql://localhost:3306/book_management?serverTimezone=Asia/Seoul
-    username: root
-    password: 12345678
+    url: ENC(sbgrr/utkGZxQ5JAFJNxKvFURTdhjCesWC+MxMsEJBmMdMVS00tp5a+Bi7lNuY0UKz3mAfIkk5ANsHkSsJ9kkRubdfOEhaf1Wh/o4NpHjPQ=)
+    username: ENC(UxDlBTo36g8L72jmp6jOww==)
+    password: ENC(bedVuzra/Jm0bJce69DJ+SklBLyNO5mY)
   jpa:
     hibernate:
       ddl-auto: update
@@ -25,7 +25,7 @@ spring:
         format_sql: true
         default_batch_fetch_size: 1000
 jwt:
-  key: minho123123123123123123123123123123123
+  key: ENC(tkOBNelzbt0ahAhynBzw0zS1ePvq+l3bA98BjyRpCnT3r//zXPEhelf3n8gLildp)
   access-token-expiration-minutes: 420
   refresh-token-expiration-minutes: 420
 
@@ -35,7 +35,6 @@ mail:
 loan_limited: 2
 max_loan_day: 14
 max_loan_quantity: 5
-
 
 jasypt: #패스워드 암호화/복호화 키
   encryptor:
