@@ -1,9 +1,3 @@
-# book-management
-도서관리API 프로젝트
-
-### 🔧 BackEnd
-<img src="https://img.shields.io/badge/Spring Boot-6DB33F?style=for-the-badge&logo=springboot&logoColor=white"><img src="https://img.shields.io/badge/Spring Data JPA-6DB33F?style=for-the-badge&logo=springdata&logoColor=white"><img src="https://img.shields.io/badge/Spring Security-6DB33F?style=for-the-badge&logo=springsecurity&logoColor=white"><img src="https://img.shields.io/badge/Gradle-02303A?style=for-the-badge&logo=gradle&logoColor=white"><img src="https://img.shields.io/badge/MySQL-4479A1?style=for-the-badge&logo=mysql&logoColor=white"><img src="https://img.shields.io/badge/JWT-181717?style=for-the-badge&logo=jwt&logoColor=white"><img src="https://img.shields.io/badge/redis-DC382D?style=for-the-badge&logo=redis&logoColor=white"><img src="https://img.shields.io/badge/Map Struct-F1A54F?style=for-the-badge&logo=mapstruct&logoColor=white"><img src="https://img.shields.io/badge/Jasypt-364161?style=for-the-badge&logo=jasypt&logoColor=white">
-
 ## 📌 프로젝트 소개
 - 도서관리 API 개인 미니 프로젝트
 - 사용자가 도서관에서 책을 빌리는 서비스입니다. 
@@ -31,4 +25,6 @@
 ## 📌 ERD
 ![book_management](https://github.com/Minogod/book-management/assets/93550624/a2a2db52-e7c3-4a4d-9638-4fc8bf6c1bd6)
 
+### 🔧 BackEnd
+<img src="https://img.shields.io/badge/Spring Boot-6DB33F?style=for-the-badge&logo=springboot&logoColor=white"><img src="https://img.shields.io/badge/Spring Data JPA-6DB33F?style=for-the-badge&logo=springdata&logoColor=white"><img src="https://img.shields.io/badge/Spring Security-6DB33F?style=for-the-badge&logo=springsecurity&logoColor=white"><img src="https://img.shields.io/badge/Gradle-02303A?style=for-the-badge&logo=gradle&logoColor=white"><img src="https://img.shields.io/badge/MySQL-4479A1?style=for-the-badge&logo=mysql&logoColor=white"><img src="https://img.shields.io/badge/JWT-181717?style=for-the-badge&logo=jwt&logoColor=white"><img src="https://img.shields.io/badge/redis-DC382D?style=for-the-badge&logo=redis&logoColor=white"><img src="https://img.shields.io/badge/Map Struct-F1A54F?style=for-the-badge&logo=mapstruct&logoColor=white"><img src="https://img.shields.io/badge/Jasypt-364161?style=for-the-badge&logo=jasypt&logoColor=white">
 
